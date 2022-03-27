@@ -16,6 +16,7 @@ func SetupRouter() *gin.Engine {
 		v1.GET("api/verse", Handlers.GetAllVerses)
 		v1.POST("api/verse", Handlers.CreateVerse)
 		v1.GET("api/category", Handlers.GetAllCategories)
+		v1.POST("api/category", Handlers.CreateCategory)
 
 		// v1.GET("todo/:id", Controllers.GetATodo)
 		// v1.PUT("todo/:id", Controllers.UpdateATodo)
