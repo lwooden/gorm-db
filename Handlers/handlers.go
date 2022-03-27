@@ -60,6 +60,8 @@ func CreateCategory(c *gin.Context) {
 	var input Models.CategoryDAO
 
 	// checks to determine if binding happened successfully; if it did not send back a "BadRequest" status to the client
+	// readability is an issue here - Go does not support Ternary Operators
+	// the left side of the if statement is evaluated first and then compared to the right side
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
