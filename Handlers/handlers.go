@@ -41,7 +41,7 @@ func CreateVerse(c *gin.Context) {
 
 func GetAllVerses(c *gin.Context) {
 
-	// initialize a VerseDAO object
+	// initialize an array of Verses
 	var Verse []Models.Verse
 
 	// "Find" gets all the items from a particular table
@@ -51,6 +51,28 @@ func GetAllVerses(c *gin.Context) {
 
 	// let the client know everything is good and send back the array full of Verse
 	c.JSON(http.StatusOK, Verse)
+
+}
+
+func CreateCategory(c *gin.Context) {
+
+	// initialize a CategoryDAO object
+	var input Models.CategoryDAO
+
+	// checks to determine if binding happened successfully; if it did not send back a "BadRequest" status to the client
+	if err := c.ShouldBind(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// if binding happened successfully, use values from the CategoryDAO object and assign them to the concrete Category object to be saved to the database
+	category := Models.Category{Name: input.Name}
+
+	// save the category object to the database
+	Config.DB.Create(&category)
+
+	// let the client know everything is good :)
+	c.JSON(http.StatusOK, gin.H{"data": category})
 
 }
 
